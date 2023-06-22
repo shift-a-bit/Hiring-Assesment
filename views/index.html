@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CONNECTION TO METAMASK</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+    <style>
+        body {
+            background-color: gray;
+            font-size: 33px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #607D8B;
+            font-size: 33px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: #fff;
+        }   
+        button:hover {
+            background-color: #607d8bb8;
+        }
+        body {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <button class="enableEthereumButton btn">Connect Metamask</button>
+<button class="sendEthButton btn">Send ETH</button>
+
+</body>
+<script>
+
+const ethereumButton = document.querySelector('.enableEthereumButton');
+const sendEthButton = document.querySelector('.sendEthButton');
+
+let accounts = [];
+
+// Send Ethereum to an address
+sendEthButton.addEventListener('click', () => {
+  ethereum
+    .request({
+      method: 'eth_sendTransaction',
+      params: [
+        {
+          from: accounts[0], 
+          to: "0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73",
+          value: '100000000000000', 
+           gasLimit: '0x5028', 
+           maxPriorityFeePerGas: '0x3b9aca00', 
+            maxFeePerGas: '0x2540be400', 
+        },
+      ],
+    })
+    .then((txHash) => console.log(txHash))
+    .catch((error) => console.error(error));
+});
+
+ethereumButton.addEventListener('click', () => {
+  getAccount();
+});
+
+async function getAccount() {
+  accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+}
+</script>
+
+</html>
